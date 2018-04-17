@@ -15,10 +15,15 @@ type KV struct {
 func traverse(path string, j interface{}) ([]*KV, error) {
 	kvs := make([]*KV, 0)
 
+	pathPre := ""
+	if path != "" {
+		pathPre = path + "/"
+	}
+
 	switch j.(type) {
 	case []interface{}:
 		for sk, sv := range j.([]interface{}) {
-			skvs, err := traverse(path+"/"+strconv.Itoa(sk), sv)
+			skvs, err := traverse(pathPre+strconv.Itoa(sk), sv)
 			if err != nil {
 				return nil, err
 			}
@@ -26,7 +31,7 @@ func traverse(path string, j interface{}) ([]*KV, error) {
 		}
 	case map[string]interface{}:
 		for sk, sv := range j.(map[string]interface{}) {
-			skvs, err := traverse(path+"/"+sk, sv)
+			skvs, err := traverse(pathPre+sk, sv)
 			if err != nil {
 				return nil, err
 			}
@@ -59,7 +64,7 @@ func ToKVs(jsonData []byte) ([]*KV, error) {
 func ToJSON(kvs []*KV) ([]byte, error) {
 	m := make(map[string]interface{})
 	for _, kv := range kvs {
-		path := strings.Split(kv.key[1:], "/")
+		path := strings.Split(kv.key, "/")
 		var parent = m
 		for s, segment := range path {
 			if s == len(path)-1 {
