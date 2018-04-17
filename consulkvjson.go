@@ -41,6 +41,8 @@ func traverse(path string, j interface{}) ([]*KV, error) {
 		kvs = append(kvs, &KV{key: path, value: strconv.FormatFloat(j.(float64), 'f', -1, 64)})
 	case bool:
 		kvs = append(kvs, &KV{key: path, value: strconv.FormatBool(j.(bool))})
+	case nil:
+		kvs = append(kvs, &KV{key: path, value: ""})
 	default:
 		kvs = append(kvs, &KV{key: path, value: j.(string)})
 	}

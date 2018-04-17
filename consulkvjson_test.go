@@ -22,7 +22,8 @@ var jsPass = []byte(`{
 	},
 	"map" : {
 		"hello": "world"
-	}
+	},
+	"null_val": null
 }`)
 
 var jsPassKVs = []*KV{
@@ -33,6 +34,7 @@ var jsPassKVs = []*KV{
 	&KV{key: "list/2", value: "3"},
 	&KV{key: "nested/boolean", value: "false"},
 	&KV{key: "map/hello", value: "world"},
+	&KV{key: "null_val", value: ""},
 }
 
 func TestToJSONPass(t *testing.T) {
