@@ -6,9 +6,9 @@ import (
 )
 
 var kvsPass = []*KV{
-	&KV{key: "root", value: "I am a string"},
-	&KV{key: "how/about/some/depth", value: "1"},
-	&KV{key: "how/about/some/more_depth", value: "2"},
+	&KV{Key: "root", Value: "I am a string"},
+	&KV{Key: "how/about/some/depth", Value: "1"},
+	&KV{Key: "how/about/some/more_depth", Value: "2"},
 }
 
 var jsPass = []byte(`{
@@ -27,14 +27,14 @@ var jsPass = []byte(`{
 }`)
 
 var jsPassKVs = []*KV{
-	&KV{key: "hello", value: "world"},
-	&KV{key: "count", value: "10"},
-	&KV{key: "list/0/nested_in_list", value: "1"},
-	&KV{key: "list/1", value: "2"},
-	&KV{key: "list/2", value: "3"},
-	&KV{key: "nested/boolean", value: "false"},
-	&KV{key: "map/hello", value: "world"},
-	&KV{key: "null_val", value: ""},
+	&KV{Key: "hello", Value: "world"},
+	&KV{Key: "count", Value: "10"},
+	&KV{Key: "list/0/nested_in_list", Value: "1"},
+	&KV{Key: "list/1", Value: "2"},
+	&KV{Key: "list/2", Value: "3"},
+	&KV{Key: "nested/boolean", Value: "false"},
+	&KV{Key: "map/hello", Value: "world"},
+	&KV{Key: "null_val", Value: ""},
 }
 
 func TestToJSONPass(t *testing.T) {

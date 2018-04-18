@@ -8,8 +8,8 @@ import (
 
 // KV represents a KV pair
 type KV struct {
-	key   string
-	value string
+	Key   string
+	Value string
 }
 
 func traverse(path string, j interface{}) ([]*KV, error) {
@@ -38,13 +38,13 @@ func traverse(path string, j interface{}) ([]*KV, error) {
 			kvs = append(kvs, skvs...)
 		}
 	case float64:
-		kvs = append(kvs, &KV{key: path, value: strconv.FormatFloat(j.(float64), 'f', -1, 64)})
+		kvs = append(kvs, &KV{Key: path, Value: strconv.FormatFloat(j.(float64), 'f', -1, 64)})
 	case bool:
-		kvs = append(kvs, &KV{key: path, value: strconv.FormatBool(j.(bool))})
+		kvs = append(kvs, &KV{Key: path, Value: strconv.FormatBool(j.(bool))})
 	case nil:
-		kvs = append(kvs, &KV{key: path, value: ""})
+		kvs = append(kvs, &KV{Key: path, Value: ""})
 	default:
-		kvs = append(kvs, &KV{key: path, value: j.(string)})
+		kvs = append(kvs, &KV{Key: path, Value: j.(string)})
 	}
 
 	return kvs, nil
@@ -66,11 +66,11 @@ func ToKVs(jsonData []byte) ([]*KV, error) {
 func ToJSON(kvs []*KV) ([]byte, error) {
 	m := make(map[string]interface{})
 	for _, kv := range kvs {
-		path := strings.Split(kv.key, "/")
+		path := strings.Split(kv.Key, "/")
 		var parent = m
 		for s, segment := range path {
 			if s == len(path)-1 {
-				parent[segment] = string(kv.value)
+				parent[segment] = string(kv.Value)
 			} else {
 				if parent[segment] == nil {
 					parent[segment] = make(map[string]interface{})
