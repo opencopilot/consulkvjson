@@ -1,0 +1,19 @@
+workspace:
+  base: /go
+  path: src/github.com/opencopilot/consul-kv-json
+
+pipeline:
+  lint:
+    group: ci
+    image: golang:1.9
+    commands:
+      - go get -v -u github.com/alecthomas/gometalinter
+      - gometalinter --install
+      - gometalinter --errors --vendor --vendored-linters ./...
+      - gofmt -d . | (! grep '.')
+
+  test:
+    group: ci
+    image: golang:1.9
+    commands:
+      - go test
