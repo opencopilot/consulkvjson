@@ -65,7 +65,7 @@ func ToKVs(jsonData []byte) ([]*KV, error) {
 }
 
 // ToJSON converts a list of KVs to a JSON tree
-func ToJSON(kvs []*KV) ([]byte, error) {
+func ToJSON(kvs []*KV) (map[string]interface{}, error) {
 	m := make(map[string]interface{})
 	for _, kv := range kvs {
 		path := strings.Split(kv.Key, "/")
@@ -81,11 +81,11 @@ func ToJSON(kvs []*KV) ([]byte, error) {
 			}
 		}
 	}
-	return json.Marshal(m)
+	return m, nil
 }
 
 // ConsulKVsToJSON converts from the consul KVPair output to json
-func ConsulKVsToJSON(consulKvs consul.KVPairs) ([]byte, error) {
+func ConsulKVsToJSON(consulKvs consul.KVPairs) (map[string]interface{}, error) {
 	kvs := make([]*KV, 0)
 	for _, kv := range consulKvs {
 		kvs = append(kvs, &KV{

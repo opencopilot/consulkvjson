@@ -1,6 +1,7 @@
 package consulkvjson
 
 import (
+	json "encoding/json"
 	"reflect"
 	"testing"
 )
@@ -39,11 +40,15 @@ var jsPassKVs = []*KV{
 
 func TestToJSONPass(t *testing.T) {
 	want := string(`{"how":{"about":{"some":{"depth":"1","more_depth":"2"}}},"root":"I am a string"}`)
-	json, err := ToJSON(kvsPass)
+	j, err := ToJSON(kvsPass)
 	if err != nil {
 		t.Errorf("Failure in ToJSON")
 	}
-	if string(json) != want {
+	jsonString, err := json.Marshal(j)
+	if err != nil {
+		t.Errorf("Failure marshalling json")
+	}
+	if string(jsonString) != want {
 		t.Errorf("Could not translate KVs to JSON")
 	}
 	// log.Printf("%s", json)
