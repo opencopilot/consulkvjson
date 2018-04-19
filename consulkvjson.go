@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"strconv"
 	"strings"
+
+	consul "github.com/hashicorp/consul/api"
 )
 
 // KV represents a KV pair
@@ -80,4 +82,16 @@ func ToJSON(kvs []*KV) ([]byte, error) {
 		}
 	}
 	return json.Marshal(m)
+}
+
+// ConsulKVsToJSON converts from the consul KVPair output to json
+func ConsulKVsToJSON(consulKvs consul.KVPairs) ([]byte, error) {
+	kvs := make([]*KV, 0)
+	for _, kv := range consulKvs {
+		kvs = append(kvs, &KV{
+			Key:   kv.Key,
+			Value: string(kv.Value),
+		})
+	}
+	return ToJSON(kvs)
 }
