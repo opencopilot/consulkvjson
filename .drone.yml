@@ -16,4 +16,5 @@ pipeline:
     group: ci
     image: golang:1.9
     commands:
+      - go get
       - go test
