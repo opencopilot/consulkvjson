@@ -7,6 +7,7 @@ pipeline:
     group: ci
     image: golang:1.9
     commands:
+      - go get
       - go get -v -u github.com/alecthomas/gometalinter
       - gometalinter --install
       - gometalinter --errors --vendor --vendored-linters ./...
