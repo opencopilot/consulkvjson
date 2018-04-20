@@ -77,7 +77,12 @@ func ToJSON(kvs []*KV) (map[string]interface{}, error) {
 				if parent[segment] == nil {
 					parent[segment] = make(map[string]interface{})
 				}
-				parent = parent[segment].(map[string]interface{})
+				switch parent[segment].(type) {
+				case map[string]interface{}:
+					parent = parent[segment].(map[string]interface{})
+				default:
+					delete(parent, segment)
+				}
 			}
 		}
 	}

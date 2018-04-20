@@ -10,6 +10,9 @@ var kvsPass = []*KV{
 	&KV{Key: "root", Value: "I am a string"},
 	&KV{Key: "how/about/some/depth", Value: "1"},
 	&KV{Key: "how/about/some/more_depth", Value: "2"},
+	&KV{Key: "how/about/some/more_depth/folder", Value: "true"},
+	&KV{Key: "how/about/some/more_depth/folder", Value: "false"},
+	&KV{Key: "a/folder/", Value: "true"},
 }
 
 var jsPass = []byte(`{
@@ -39,7 +42,7 @@ var jsPassKVs = []*KV{
 }
 
 func TestToJSONPass(t *testing.T) {
-	want := string(`{"how":{"about":{"some":{"depth":"1","more_depth":"2"}}},"root":"I am a string"}`)
+	want := string(`{"a":{"folder":{"":"true"}},"how":{"about":{"some":{"depth":"1","folder":"true","more_depth":{"folder":"false"}}}},"root":"I am a string"}`)
 	j, err := ToJSON(kvsPass)
 	if err != nil {
 		t.Errorf("Failure in ToJSON")
@@ -51,7 +54,7 @@ func TestToJSONPass(t *testing.T) {
 	if string(jsonString) != want {
 		t.Errorf("Could not translate KVs to JSON")
 	}
-	// log.Printf("%s", json)
+	// log.Printf("%s", jsonString)
 }
 
 func TestToKVs(t *testing.T) {
