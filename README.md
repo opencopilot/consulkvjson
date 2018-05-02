@@ -1,4 +1,4 @@
-## consul-kv-json 🌲
+## consulkvjson 🌲
 
 The Consul KV store has some nice tree properties for querying for a subtree (`-recurse` with a prefix). However, the output is still a flat list of KV pairs.
 
